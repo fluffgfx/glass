@@ -1,7 +1,7 @@
 import { render } from 'react-dom'
 import React, { Component } from 'react'
 import Slider from 'rc-slider'
-import Glass from '../build/glass.js'
+import Glass from 'react-glass'
 
 const sliderStyle = {
   width: '100%',
