@@ -1,56 +1,26 @@
-# Glass
+<img src="https://i.imgur.com/he5ACRP.png" width="400" />
+___
 
-Glass is an in browser code editor written in react.
+Glass is an in-browser code editor written in react.
 
-## What?
+See an in-browser demo at [glass.blvd.space](http://glass.blvd.space).<sup>1</sup>
 
-It's a fancy `<textarea>`.
-
-Before:
-
-```
-<textarea />
-```
-
-After:
-
-```
-npm install --save react-glass
-```
-
-Because `glass` is taken by an abandoned attempt at what standardJS did better anyway.
-
-```
-// Arcane import black magic
-<Glass language='javascript' />
-```
-
-And now, your `<textarea>` has syntax highlighting.
-
-## How?
-
-Glass wraps a textarea and makes the original element invisible, passing the value
-through [prismjs](http://prismjs.com) and making it colorful. Yay!
+- **Fast:** Ish.
+- **Easy:** A single element. One `<Glass language='js' />` line, and it's done.
+- **Small:** Leverages React and prismjs, composing only 400 lines of code.
+- **Free:** MIT Licensed.
 
 ## Why?
 
-For the thrill of the journey, and the hangover of arrival. Or something like that.
+**Glass is not the best in browser code editor out there.**<sup>2</sup> It is best in certain cases, but I wouldn't advise it if you just need a quick in-browser code editor. It is useful if you **already use React,** and need a light in browser code editor.
 
-Wait, that doesn't make sense.
+It does **not** handle:
 
-## Where?
+- **Language detection.**<sup>3</sup>
+- **Syntax checking.**
 
-Right here. Download minified releases in the "releases" tab, where one figures
-releases would go.
+It will just make your code colorful, without a lot of fuss. That's all.
 
-For a live demo, visit [the website](https://glass.blvd.space). It ends in .space,
-because my registrar was having a sale on the .space domain name.
-
-## Who?
-
-Written with love and coffee by [Kyle Fahringer](https://vulpine.me). If college
-admissions officers are reading: Hi! Please accept me.
-
-## When?
-
-Right here, right now.
+<sup>1: The .space domain was on sale.</sup>  
+<sup>2: That's probably [ace](http://ace.c9.io). Codemirror is a single, 9000 line JS file, which lags my browser every time I try to peruse the code.</sup>  
+<sup>3: I'm planning on implementing an `underline` prop, which can be passed an array of objects to underline sections of the code. But the syntax checking itself still has to be done by an outside source.</sup>
