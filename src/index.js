@@ -14,7 +14,7 @@
 import React, { Component, PropTypes } from 'react'
 import { findDOMNode } from 'react-dom' // i HATE to use react-dom
 import getCaret from 'textarea-caret'
-import styles from './styles.json'
+import styles from './styles'
 
 // Alright, I take everything in that last comment back.
 // React is just the new _ or $. The new multipurpose tool

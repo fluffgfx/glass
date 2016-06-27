@@ -1,9 +1,16 @@
 module.exports = {
-  entry: './build/glass.js',
+  entry: './src/index.js',
   output: {
     path: './build',
-    filename: 'glass.bundle.js'
+    filename: 'bundle.js'
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.js$/,
+        exclude: /(node_modules|bower_components)/,
+        loader: 'babel'
+      }
+    ]
   }
-  // Q: Why not use babel-loader?
-  // A: It doesn't work on my workstation so I don't.
 }
