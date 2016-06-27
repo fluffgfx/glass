@@ -14,6 +14,7 @@
 import React, { Component, PropTypes } from 'react'
 import { findDOMNode } from 'react-dom' // i HATE to use react-dom
 import getCaret from 'textarea-caret'
+import styles from './styles.json'
 
 // Alright, I take everything in that last comment back.
 // React is just the new _ or $. The new multipurpose tool
@@ -162,23 +163,17 @@ class Glass extends Component {
     // Q: Why don't we just pass this.handleChange to onChange?
     //    Why instead pass a new arrow function that achieves
     //    exactly the same thing but looks longer?
-    // A: Because if we don't, this.handleChange get super
+    // A: Because if we don't, this.handleChange gets super
     //    philosophical and ceases to acknowledge the existence
     //    of "this" or "self," mere illusions perpetuated by
-    //    being on lower realms.
-
-    // Q: Why do you pass the styles manually to everything?
-    // A: Because I hate maintainability.
+    //    beings on lower realms.
     return (
       <div
         className='glass'
         style={{
+          ...styles.main,
           width: this.props.width,
           height: this.props.height,
-          position: 'relative',
-          margin: 0,
-          padding: 0,
-          minHeight: 100,
           backgroundColor: this.state.backgroundColor,
           ...this.props.style
         }}>
@@ -195,7 +190,6 @@ class Glass extends Component {
           cursor={this.state.cursor}
           lineNumbersEnabled={this.props.lineNumbers}
           lineNumbers={this.state.lines}
-          style={this.props.style}
           scroll={this.state.scroll} />
       </div>
     )
@@ -246,14 +240,7 @@ function GlassArea ({
   return (
     <div
       className='glass-text'
-      style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-    //  opacity: 0,
-        width: '100%',
-        height: '100%'
-      }}>
+      style={styles.areaDiv}>
       <textarea
         onChange={(e) => { onChange(e, text) }}
         onKeyPress={(e) => { onCursorMove(e, text) }}
@@ -266,23 +253,11 @@ function GlassArea ({
         }}
         spellCheck='false'
         style={{
-          resize: 'none',
-          overflowX: 'hidden',
-          overflowY: 'scroll',
-          border: 'none',
-          padding: 0,
-          margin: 0,
-      //  whiteSpace: 'pre',
-      //  wordWrap: 'normal',
-          font: '14px monospace',
-          position: 'absolute',
-          top: 0,
+          ...styles.area,
           left: lineNumbersEnabled ? '5%' : 0,
           width: lineNumbersEnabled ? '95%' : '100%',
           minHeight: height,
-          height: height,
-          color: 'rgba(0, 0, 0, 0)',
-          textDecoration: 'none'
+          height: height
         }}
         defaultValue={defaultValue} value={value} />
     </div>
@@ -304,32 +279,14 @@ class GlassDisplay extends Component {
       <div className='glass-display'
         tabindex='-1'
         aria-hidden='true'
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          pointerEvents: 'none',
-          width: '100%',
-          height: '100%',
-          overflowY: 'scroll',
-    //    opacity: 0.5, // debugging
-          ...this.props.style
-        }}>
+        style={styles.displayDiv}>
         {this.props.lineNumbersEnabled ? <GlassLineNumbers lines={this.props.lineNumbers} /> : null}
         <pre
           className='language-'
           style={{
-            margin: 0,
-            padding: 0,
-            border: 0,
-            font: '14px monospace',
-            position: 'absolute',
-            top: 0,
+            ...styles.display,
             left: this.props.lineNumbersEnabled ? '5%' : 0,
-            width: this.props.lineNumbersEnabled ? '95%' : '100%',
-            height: 'auto',
-            whiteSpace: 'pre-wrap',
-            overflow: 'visible'
+            width: this.props.lineNumbersEnabled ? '95%' : '100%'
           }}
           dangerouslySetInnerHTML={{ __html: this.props.value }} />
         <GlassCursor lineNumbersEnabled={this.props.lineNumbersEnabled} cursor={this.props.cursor} />
@@ -345,7 +302,6 @@ GlassDisplay.propTypes = {
   cursor: PropTypes.object.isRequired,
   lineNumbersEnabled: PropTypes.bool.isRequired,
   lineNumbers: PropTypes.arrayOf(PropTypes.string).isRequired,
-  style: PropTypes.object,
   height: PropTypes.number,
   scroll: PropTypes.number
 }
@@ -356,27 +312,9 @@ function GlassLineNumbers ({ lines }) {
   return (
     <div
       className='glass-line-numbers'
-      style={{
-        width: '4%',
-        margin: 0,
-        marginRight: '1%',
-        padding: 0,
-        border: 0,
-        font: '14px monospace',
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        height: '100%',
-        backgroundColor: '#ccc'
-      }}>
+      style={styles.lineNumbersDiv}>
       <pre
-        style={{
-          margin: 0,
-          padding: 0,
-          border: 0,
-          backgroundColor: '#ccc',
-          textAlign: 'right'
-        }} >
+        style={styles.lineNumbers}>
         {lines.map((l) => `${l} \n`)}
       </pre>
     </div>
@@ -387,25 +325,14 @@ function GlassCursor ({ cursor, lineNumbersEnabled }) {
   return (
     <div className='glass-cursor'
       style={{
-        position: 'absolute',
+        ...styles.cursorParentDiv,
         top: cursor.top,
         left: lineNumbersEnabled ? '5%' : 0,
-        width: lineNumbersEnabled ? '95%' : '100%',
-        height: 14,
-        font: '14px monospace',
-        margin: 0,
-        padding: 0,
-        border: 0,
-        fontWeight: 'bold'
+        width: lineNumbersEnabled ? '95%' : '100%'
       }}>
-      <div style={{
-        position: 'relative',
-        width: '100%',
-        height: '100%'
-      }} >
+      <div style={styles.cursorChildDiv} >
         <span style={{
-          position: 'absolute',
-          top: 0,
+          ...styles.cursor,
           left: cursor.left - 2.5
         }} >|</span>
       </div>
@@ -414,5 +341,3 @@ function GlassCursor ({ cursor, lineNumbersEnabled }) {
 }
 
 export default Glass
-// Off of 420 by one line. Damn.
-// Maybe next version.
